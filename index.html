@@ -1,6 +1,5 @@
-HTML
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +13,39 @@ HTML
             margin: 0 auto;
             padding: 24px;
         }
+
+        /* Language Toggle Bar */
+        .lang-switch-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #e8eaed;
+            padding-bottom: 12px;
+        }
+
+        .lang-btn {
+            background-color: #f1f3f4;
+            border: 1px solid #dadce0;
+            color: #3c4043;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-btn:hover {
+            background-color: #e8eaed;
+        }
+
+        .lang-btn.active {
+            background-color: #1a73e8;
+            color: #ffffff;
+            border-color: #1a73e8;
+        }
+
         h1 { color: #1a73e8; border-bottom: 2px solid #e8eaed; padding-bottom: 12px; }
         h2 { color: #202124; margin-top: 28px; }
         p, li { font-size: 15px; color: #4a4a4a; }
@@ -21,15 +53,24 @@ HTML
         a { color: #1a73e8; text-decoration: none; }
         a:hover { text-decoration: underline; }
         .last-updated { color: #5f6368; font-size: 14px; font-style: italic; }
-        .divider { margin: 40px 0; border: 0; border-top: 2px dashed #e8eaed; }
+
+        /* Arabic Styles */
         .arabic-section { direction: rtl; text-align: right; }
         .arabic-section ul { padding-right: 20px; padding-left: 0; }
+        
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
+    <!-- Language Selector Header -->
+    <div class="lang-switch-container" id="lang-container">
+        <button id="btn-en" class="lang-btn active" onclick="switchLanguage('en')">English</button>
+        <button id="btn-ar" class="lang-btn" onclick="switchLanguage('ar')">العربية</button>
+    </div>
+
     <!-- English Section -->
-    <section lang="en" dir="ltr">
+    <section id="section-en" lang="en" dir="ltr">
         <h1>Privacy Policy</h1>
         <p class="last-updated">Last updated: September 12, 2026</p>
 
@@ -66,13 +107,11 @@ HTML
 
         <h2>5. Contact Us</h2>
         <p>If you have any questions regarding this Privacy Policy, please contact us at:</p>
-        <p><strong>Email:</strong> <a href="mailto:tecuploads@gmail.com">support@ft-asd.com</a></p>
+        <p><strong>Email:</strong> <a href="mailto:support@ft-asd.com">tecuploads@gmail.com</a></p>
     </section>
 
-    <hr class="divider">
-
     <!-- Arabic Section -->
-    <section lang="ar" dir="rtl" class="arabic-section">
+    <section id="section-ar" lang="ar" dir="rtl" class="arabic-section hidden">
         <h1>سياسة الخصوصية</h1>
         <p class="last-updated">آخر تحديث: 12 سبتمبر 2026</p>
 
@@ -109,8 +148,35 @@ HTML
 
         <h2>5. الاتصال بنا</h2>
         <p>إذا كان لديك أي استفسار بشأن سياسة الخصوصية، يمكنك التواصل معنا عبر:</p>
-        <p><strong>البريد الإلكتروني:</strong> <a href="mailto:tecuploads@gmail.com">support@ft-asd.com</a></p>
+        <p><strong>البريد الإلكتروني:</strong> <a href="mailto:support@ft-asd.com">tecuploads@gmail.com</a></p>
     </section>
+
+    <!-- Language Toggle Script -->
+    <script>
+        function switchLanguage(lang) {
+            const secEn = document.getElementById('section-en');
+            const secAr = document.getElementById('section-ar');
+            const btnEn = document.getElementById('btn-en');
+            const btnAr = document.getElementById('btn-ar');
+            const langContainer = document.getElementById('lang-container');
+
+            if (lang === 'ar') {
+                secEn.classList.add('hidden');
+                secAr.classList.remove('hidden');
+                btnEn.classList.remove('active');
+                btnAr.classList.add('active');
+                langContainer.style.justifyContent = 'flex-start';
+                document.documentElement.setAttribute('lang', 'ar');
+            } else {
+                secAr.classList.add('hidden');
+                secEn.classList.remove('hidden');
+                btnAr.classList.remove('active');
+                btnEn.classList.add('active');
+                langContainer.style.justifyContent = 'flex-end';
+                document.documentElement.setAttribute('lang', 'en');
+            }
+        }
+    </script>
 
 </body>
 </html>
